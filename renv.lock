@@ -114,7 +114,7 @@
       "Package": "pak",
       "Version": "0.7.2",
       "Source": "Repository",
-      "Repository": "https://r-lib.github.io/p/pak/stable/source/linux-gnu/x86_64",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "tools",

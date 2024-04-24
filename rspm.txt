@@ -1,0 +1,4 @@
+rspm create source --name=subset --type=curated-cran --snapshot=2024-01-04
+rspm add --packages=ggplot2,shiny,clustermq,tidyverse,nlmixr2 --source=subset --commit --snapshot=2024-01-04
+rspm create repo --name=validated-R --description='Validated R packages'
+rspm subscribe --repo=validated-R --source=subset"

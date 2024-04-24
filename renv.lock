@@ -112,7 +112,7 @@
     },
     "pak": {
       "Package": "pak",
-      "Version": "0.7.2",
+      "Version": "0.7.2.9000",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -120,7 +120,7 @@
         "tools",
         "utils"
       ],
-      "Hash": "93288e19455e09f590b56db4d50248fe"
+      "Hash": "dba4176a7401fe45e35ae7ba8ef7a13a"
     },
     "pkgbuild": {
       "Package": "pkgbuild",

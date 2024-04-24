@@ -1,3 +1,5 @@
 pkgs/
 libs/
 tmp/
+pak/
+out/

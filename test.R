@@ -103,12 +103,19 @@ deps_install <- packageDepsList(deps_install, available_packages)
 deps_testing <- packageDepsList(deps_testing, available_packages)
 
 # we want to run pak::pkg_install in a vanilla session in order to avoid conflicts with already loaded packages
-res <-
-  callr::r_vanilla(function(deps) {
-    .libPaths("./pak")
-    pak::pkg_install(deps, lib = "./libs")
-  }, args = list(deps = deps_install))
+Sys.setenv("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
 
+res <-
+  callr::r_vanilla(function(deps,repos) {
+    .libPaths("./pak")
+    options(repos=repos)
+    pak::pkg_install(deps, lib = "./libs")
+  },
+  args = list(deps = deps_install,repos=options()$repos),
+  env = c("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
+  )
+
+.libPaths("./pak",.libPaths())
 pk <- pak::pkg_download(deps_testing, dest_dir = "pkgs", platform = "source")
 
 libpath = paste0(getwd(), "/libs")
@@ -128,6 +135,3 @@ for (i in seq(nrow(pk))) {
     write(res$stdout,file=paste0("out/",res$package,"-",res$version,".out"))
   }
 }
-
-
-

@@ -4,27 +4,27 @@
     "Repositories": [
       {
         "Name": "BioCsoft",
-        "URL": "https://packagemanager.posit.co/bioconductor/packages/3.18/bioc"
+        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/bioc"
       },
       {
         "Name": "BioCann",
-        "URL": "https://packagemanager.posit.co/bioconductor/packages/3.18/data/annotation"
+        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/data/annotation"
       },
       {
         "Name": "BioCexp",
-        "URL": "https://packagemanager.posit.co/bioconductor/packages/3.18/data/experiment"
+        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/data/experiment"
       },
       {
         "Name": "BioCworkflows",
-        "URL": "https://packagemanager.posit.co/bioconductor/packages/3.18/workflows"
+        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/workflows"
       },
       {
         "Name": "BioCbooks",
-        "URL": "https://packagemanager.posit.co/bioconductor/packages/3.18/books"
+        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/books"
       },
       {
         "Name": "CRAN",
-        "URL": "https://packagemanager.posit.co/cran/latest"
+        "URL": "http://34.241.81.155:4242/cran/2024-01-04"
       }
     ]
   },
@@ -110,18 +110,6 @@
       ],
       "Hash": "698ece7ba5a4fa4559e3d537e7ec3d31"
     },
-    "pak": {
-      "Package": "pak",
-      "Version": "0.7.2.9000",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "tools",
-        "utils"
-      ],
-      "Hash": "dba4176a7401fe45e35ae7ba8ef7a13a"
-    },
     "pkgbuild": {
       "Package": "pkgbuild",
       "Version": "1.4.4",
@@ -193,29 +181,15 @@
       ],
       "Hash": "8f25ebe2ec38b1f2aef3b0d2ef76f6c4"
     },
-    "remotes": {
-      "Package": "remotes",
-      "Version": "2.5.0",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "methods",
-        "stats",
-        "tools",
-        "utils"
-      ],
-      "Hash": "3ee025083e66f18db6cf27b56e23e141"
-    },
     "renv": {
       "Package": "renv",
-      "Version": "1.0.7",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
         "utils"
       ],
-      "Hash": "397b7b2a265bc5a7a06852524dabae20"
+      "Hash": "41b847654f567341725473431dd0d5ab"
     },
     "rprojroot": {
       "Package": "rprojroot",

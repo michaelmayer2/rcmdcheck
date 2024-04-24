@@ -1,9 +1,7 @@
 library(rcmdcheck)
 library(tinytex)
 
-if (length(tinytex::tl_pkgs()) == 0) {
-  tinytex::install_tinytex(bundle = "TinyTeX")
-}
+if (class(try(tinytex::tl_pkgs(),silent=TRUE)) == "try-error") tinytex::install_tinytex()
 
 if (length(tinytex::tl_pkgs()) <= 104) {
   tinytex::install_tinytex(bundle = "TinyTeX", force = TRUE)

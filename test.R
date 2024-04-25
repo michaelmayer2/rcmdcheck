@@ -1,12 +1,4 @@
 library(rcmdcheck)
-library(tinytex)
-
-if (class(try(tinytex::tl_pkgs(),silent=TRUE)) == "try-error") tinytex::install_tinytex()
-
-if (length(tinytex::tl_pkgs()) <= 104) {
-  tinytex::install_tinytex(bundle = "TinyTeX", force = TRUE)
-}
-
 
 # We'll install pak into a subdirectory here so it is accessible via the callr process later
 if (!dir.exists("./pak/pak")) {
@@ -111,14 +103,26 @@ res <-
     options(repos=repos)
     pak::pkg_install(deps, lib = "./libs")
   },
-  args = list(deps = deps_install,repos=options()$repos),
+  args = list(deps = deps_testing,repos=options()$repos),
   env = c("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
   )
 
-.libPaths("./pak",.libPaths())
+deps_suggests<-deps_install[!deps_install %in% deps_testing]
+
+res <-
+  callr::r_vanilla(function(deps,repos) {
+    .libPaths(c("./pak","./libs"))
+    options(repos=repos)
+    pak::pkg_install(deps, lib = "./deps")
+  },
+  args = list(deps = deps_suggests,repos=options()$repos),
+  env = c("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
+  )
+
+.libPaths(c("./pak",.libPaths()))
 pk <- pak::pkg_download(deps_testing, dest_dir = "pkgs", platform = "source")
 
-libpath = paste0(getwd(), "/libs")
+libpath = c(paste0(getwd(), "/libs"),paste0(getwd(), "/deps"))
 
 if (!dir.exists("out")) dir.create("out")
 
@@ -135,3 +139,4 @@ for (i in seq(nrow(pk))) {
     write(res$stdout,file=paste0("out/",res$package,"-",res$version,".out"))
   }
 }
+

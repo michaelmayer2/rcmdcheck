@@ -14,7 +14,13 @@ RUN mkdir /work
 #COPY test.R /work
 #COPY renv.lock /work
 
-RUN dnf install -y perl xz
+RUN dnf install -y perl xz texinfo-tex texlive-preprint texlive  
+
+#RUN curl -L -o install-tl-unx.tar.gz https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
+#	zcat < install-tl-unx.tar.gz | tar xf - && \
+#	cd install-tl-2* && \
+#	perl ./install-tl --scheme full  --no-interaction --no-doc-install && \
+#	 echo -e "PATH=`dirname /usr/local/texlive/*/bin/x86_64-linux`:\$PATH\nMANPATH=`dirname /usr/local/texlive/*/texmf-dist/doc/man`:\$MANPATH\nINFOPATH=`dirname /usr/local/texlive/*/texmf-dist/doc/info`:\$INFOPATH" > /etc/profile.d/texlive.sh 
 
 #RUN cd /work && R -q -e 'renv::activate()' && R -q -e 'renv::restore()' && R CMD BATCH test.R
 

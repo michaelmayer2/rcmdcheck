@@ -1,5 +1,6 @@
 FROM rockylinux:9 
 
+ENV LANG=en_US.UTF-8
 ARG R_VERSION=4.3.2
 RUN dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
@@ -14,7 +15,7 @@ RUN mkdir /work
 #COPY test.R /work
 #COPY renv.lock /work
 
-RUN dnf install -y perl xz texinfo-tex texlive-preprint texlive  
+RUN dnf install -y perl xz diffutils texinfo-tex texlive-preprint texlive  
 
 #RUN curl -L -o install-tl-unx.tar.gz https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz && \
 #	zcat < install-tl-unx.tar.gz | tar xf - && \

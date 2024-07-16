@@ -3,28 +3,8 @@
     "Version": "4.3.2",
     "Repositories": [
       {
-        "Name": "BioCsoft",
-        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/bioc"
-      },
-      {
-        "Name": "BioCann",
-        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/data/annotation"
-      },
-      {
-        "Name": "BioCexp",
-        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/data/experiment"
-      },
-      {
-        "Name": "BioCworkflows",
-        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/workflows"
-      },
-      {
-        "Name": "BioCbooks",
-        "URL": "http://34.241.81.155:4242/bioconductor/packages/3.18/books"
-      },
-      {
         "Name": "CRAN",
-        "URL": "http://34.241.81.155:4242/cran/latest"
+        "URL": "https://packagemanager.posit.co/cran/latest"
       }
     ]
   },
@@ -109,6 +89,22 @@
         "utils"
       ],
       "Hash": "698ece7ba5a4fa4559e3d537e7ec3d31"
+    },
+    "pak": {
+      "Package": "pak",
+      "Version": "0.7.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "r-lib",
+      "RemoteRepo": "pak",
+      "RemoteRef": "main",
+      "Requirements": [
+        "R",
+        "tools",
+        "utils"
+      ],
+      "Hash": "0f1f31c7263beeb141ef0fc4235125e6"
     },
     "pkgbuild": {
       "Package": "pkgbuild",
@@ -214,16 +210,6 @@
       ],
       "Hash": "3f9796a8d0a0e8c6eb49a4b029359d1f"
     },
-    "tinytex": {
-      "Package": "tinytex",
-      "Version": "0.50",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "xfun"
-      ],
-      "Hash": "be7a76845222ad20adb761f462eed3ea"
-    },
     "withr": {
       "Package": "withr",
       "Version": "3.0.0",
@@ -235,18 +221,6 @@
         "graphics"
       ],
       "Hash": "d31b6c62c10dcf11ec530ca6b0dd5d35"
-    },
-    "xfun": {
-      "Package": "xfun",
-      "Version": "0.43",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "grDevices",
-        "stats",
-        "tools"
-      ],
-      "Hash": "ab6371d8653ce5f2f9290f4ec7b42a8e"
     },
     "xopen": {
       "Package": "xopen",

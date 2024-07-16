@@ -46,7 +46,9 @@ packages_to_be_validated <-
 packages_to_be_validated <- "tidyverse"
 
 
-deps_testing <- unique(c(
+deps<-c()
+
+deps$testing <- unique(c(
   packages_to_be_validated,
   unlist(
     tools::package_dependencies(
@@ -57,21 +59,21 @@ deps_testing <- unique(c(
   )
 ))
 
-deps_install <-
+deps$install <-
   unique(c(
     packages_to_be_validated,
     unlist(tools::package_dependencies(
-      c(deps_testing, packages_to_be_validated),
+      c(deps$testing, packages_to_be_validated),
       which = c("Imports", "LinkingTo", "Suggests", "Enhances")
     ))
   ))
 
 # Now we also need to catch all of those dependencies of the "Suggests" and "Enhances" dependencies all the way
-deps_install <- 
+deps$install <- 
   unique(c(
-    deps_install, 
+    deps$install, 
     unlist(tools::package_dependencies(
-      c(deps_install, packages_to_be_validated),
+      c(deps$install, packages_to_be_validated),
       which = c("Imports", "LinkingTo"),
       recursive = TRUE
     ))
@@ -83,44 +85,59 @@ filterBaseRecDeps <- function(deps) {
   
 }
 
-#deps_testing = filterBaseRecDeps(deps_testing)
-#deps_install = filterBaseRecDeps(deps_install)
+#deps$testing = filterBaseRecDeps(deps$testing)
+#deps$install = filterBaseRecDeps(deps$install)
 
 packageDepsList <- function(deps, av_pack) {
   paste0(av_pack[av_pack$Package %in% deps, ]$Package, "@",
          av_pack[av_pack$Package %in% deps, ]$Version)
 }
 
-deps_install <- packageDepsList(deps_install, available_packages)
-deps_testing <- packageDepsList(deps_testing, available_packages)
+deps$install_ver <- packageDepsList(deps$install, available_packages)
+deps$testing_ver <- packageDepsList(deps$testing, available_packages)
 
 # we want to run pak::pkg_install in a vanilla session in order to avoid conflicts with already loaded packages
 Sys.setenv("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
 
+
+libpathpak=paste0(getwd(),"/pak")
+libpathlibs=paste0(getwd(),"/libs")
+
+
+# Install all packages to be tested 
 res <-
-  callr::r_vanilla(function(deps,repos) {
-    .libPaths("./pak")
+  callr::r_vanilla(function(deps,repos,libpath,libpathlibs) {
+    .libPaths(libpath)
     options(repos=repos)
-    pak::pkg_install(deps, lib = "./libs")
+    pak::pkg_install(deps, lib = libpathlibs)
   },
-  args = list(deps = deps_testing,repos=options()$repos),
+  args = list(deps = deps$testing_ver,repos=options()$repos, libpathlibs=libpathlibs,libpath=c(libpathpak,libpathlibs)),
   env = c("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
   )
 
-deps_suggests<-deps_install[!deps_install %in% deps_testing]
+
+#deps$suggests_ver<-deps$install_ver[!deps$install_ver %in% deps$testing_ver]
+#deps$suggests<-deps$install[!deps$install %in% deps$testing_ver]
+
+
+# mark all already installed packages in libs as such 
+deps$install_ver[deps$install_ver %in% deps$testing_ver]<-paste0("local::/work/libs/",deps$install[deps$install %in% deps$testing ])
+
+
+libpathdeps<-paste0(getwd(),"/deps")
 
 res <-
-  callr::r_vanilla(function(deps,repos) {
-    .libPaths(c("./pak","./libs"))
+  callr::r_vanilla(function(deps,repos,libpath,libpathlibs) {
+    .libPaths(libpath)
     options(repos=repos)
-    pak::pkg_install(deps, lib = "./deps")
+    pak::pkg_install(deps, lib = libpathlibs)
   },
-  args = list(deps = deps_suggests,repos=options()$repos),
+  args = list(deps = deps$install_ver,repos=options()$repos,libpath=c(libpathpak,libpathlibs) ,libpathlibs=libpathdeps),
   env = c("PKG_SYSREQS_PLATFORM" = "rockylinux-9")
   )
 
 .libPaths(c("./pak",.libPaths()))
-pk <- pak::pkg_download(deps_testing, dest_dir = "pkgs", platform = "source")
+pk <- pak::pkg_download(deps$testing_ver, dest_dir = "pkgs", platform = "source")
 
 libpath = c(paste0(getwd(), "/libs"),paste0(getwd(), "/deps"))
 
